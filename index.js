@@ -10,7 +10,7 @@ import 'dotenv/config'; // Load environment variables from .env filedotenv.confi
 
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT ;
 
 app.use(cors({
     origin: process.env.CLIENT_URL,
@@ -18,14 +18,12 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// Serve static files from the React app
 
 // API routes
 app.use(uploadRoutes);
 app.use(chatRoutes);
 app.use(userChatRoutes);
 
-// Handle React routing, return all requests to React app
 
 
 // Connect to MongoDB
@@ -37,7 +35,9 @@ const connect = async () => {
         console.log(error);
     }
 };
-
+app.get("/", (req, res) => {
+    res.send("Hello from Vercel and server.js!");
+});
 
 app.listen(PORT, () => {
     connect();
