@@ -36,7 +36,12 @@ const connect = async () => {
     }
 };
 app.get("/", (req, res) => {
-    res.send("Hello from Vercel and server.js!");
+    // Debug: Send req.auth in the response
+    res.json({
+        message: "Hello from Vercel and server.js!",
+        auth: req.auth, // Include the req.auth object
+        userId: req.auth?.userId // Include the userId specifically
+    });
 });
 
 app.listen(PORT, () => {
