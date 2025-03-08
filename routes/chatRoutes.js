@@ -4,8 +4,8 @@ import { createChat, getChatById, updateChat } from '../controllers/chatControll
 
 const router = express.Router();
 
-router.post('/api/chats', createChat);
-router.put('/api/chats/:id', updateChat);
-router.get('/api/userchats/:id',  getChatById);
+router.post('/api/chats', requireAuth(), createChat);
+router.put('/api/chats/:id', requireAuth(), updateChat);
+router.get('/api/userchats/:id', requireAuth(), getChatById);
 
 export default router;
