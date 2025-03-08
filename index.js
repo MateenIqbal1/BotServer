@@ -1,25 +1,32 @@
 import express from 'express';
-import 'dotenv/config';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import cors from 'cors';
 import mongoose from 'mongoose';
-import { requireAuth } from '@clerk/express';
-import path from 'path';
-import url, { fileURLToPath } from 'url';
 import uploadRoutes from './routes/uploadRoute.js';
 import chatRoutes from './routes/chatRoutes.js';
 import userChatRoutes from './routes/userChatRoutes.js';
+import 'dotenv/config'; // Load environment variables from .env filedotenv.config();
 
-const PORT = process.env.PORT;
+
 const app = express();
-
-
+const PORT = process.env.PORT || 3000;
 
 app.use(cors({
     origin: process.env.CLIENT_URL,
     credentials: true
 }));
-
 app.use(express.json());
+
+// Serve static files from the React app
+
+// API routes
+app.use(uploadRoutes);
+app.use(chatRoutes);
+app.use(userChatRoutes);
+
+// Handle React routing, return all requests to React app
+
 
 // Connect to MongoDB
 const connect = async () => {
@@ -31,20 +38,8 @@ const connect = async () => {
     }
 };
 
-// Routes
-app.use(uploadRoutes);
-app.use(chatRoutes);
-app.use(userChatRoutes);
-
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(401).send("Unauthenticated");
-});
-
-
-
 
 app.listen(PORT, () => {
     connect();
-    console.log("Server is running on port 3000");
+    console.log(`Server is running on port ${PORT}`);
 });
