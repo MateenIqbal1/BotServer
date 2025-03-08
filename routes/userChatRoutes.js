@@ -4,6 +4,6 @@ import { getUserChats } from '../controllers/userChatController.js';
 
 const router = express.Router();
 
-router.get('/api/userchats', requireAuth(), getUserChats);
+router.get('/api/userchats',  getUserChats);
 
 export default router;
