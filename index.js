@@ -23,7 +23,9 @@ app.use(uploadRoutes);
 app.use(chatRoutes);
 app.use(userChatRoutes);
 app.use('/api/auth',authRoutes)
-
+app.use('/',(req,res)=>{
+    return res.status(200).send("welome to home /");
+})
 
 
 const connect = async () => {
