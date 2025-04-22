@@ -5,7 +5,10 @@ export const getUserChats = async (req, res) => {
 
     try {
         const userChats = await UserChat.find({ userId });
-        res.status(200).send(userChats[0].chats);
+
+        const chats = userChats.length > 0 ? userChats[0].chats : [];  
+        
+        res.status(200).json(chats); 
     } catch (error) {
         console.log(error);
         res.status(500).send("Error fetching chats");

@@ -6,11 +6,12 @@ import mongoose from 'mongoose';
 import uploadRoutes from './routes/uploadRoute.js';
 import chatRoutes from './routes/chatRoutes.js';
 import userChatRoutes from './routes/userChatRoutes.js';
-import 'dotenv/config'; // Load environment variables from .env filedotenv.config();
+import authRoutes from './routes/authRoutes.js'
+import 'dotenv/config'; 
 
 
 const app = express();
-const PORT = process.env.PORT ;
+const PORT = process.env.PORT || 3000;
 
 app.use(cors({
     origin: process.env.CLIENT_URL,
@@ -19,14 +20,13 @@ app.use(cors({
 app.use(express.json());
 
 
-// API routes
 app.use(uploadRoutes);
 app.use(chatRoutes);
 app.use(userChatRoutes);
+app.use('/api/auth',authRoutes)
 
 
 
-// Connect to MongoDB
 const connect = async () => {
     try {
         await mongoose.connect(process.env.MONGODB_URL);
@@ -35,14 +35,8 @@ const connect = async () => {
         console.log(error);
     }
 };
-app.get("/", (req, res) => {
-    // Debug: Send req.auth in the response
-    res.json({
-        message: "Hello from Vercel and server.js!",
-        auth: req.auth, // Include the req.auth object
-        userId: req.auth?.userId // Include the userId specifically
-    });
-});
+
+
 
 app.listen(PORT, () => {
     connect();
