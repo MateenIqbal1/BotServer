@@ -13,12 +13,12 @@ import 'dotenv/config';
 const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(express.json());
-app.use(cors({
-    origin: [ "http://localhost:5173", "https://chat-bot-frontend-zeta.vercel.app" ],
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials:true
-}));
+const corsOrigin ={
+    origin:'https://chat-bot-frontend-zeta.vercel.app/', //or whatever port your frontend is using
+    credentials:true,            
+    optionSuccessStatus:200
+}
+app.use(cors(corsOrigin));
 
 
 app.use(uploadRoutes);
