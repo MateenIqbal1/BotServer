@@ -14,7 +14,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(cors({
-    origin: "https://chat-bot-frontend-l6axfrf0q-mateens-projects-303e07ad.vercel.app",
+    origin: "http://localhost:5173/",
     credentials: true
 }));
 
