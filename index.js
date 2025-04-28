@@ -12,13 +12,7 @@ import 'dotenv/config';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-app.use(express.json());
-const corsOrigin ={
-    origin:'https://chat-bot-frontend-zeta.vercel.app/', //or whatever port your frontend is using
-    credentials:true,            
-    optionSuccessStatus:200
-}
-app.use(cors(corsOrigin));
+
 
 
 app.use(uploadRoutes);
@@ -30,14 +24,14 @@ app.use('/',(req,res)=>{
 })
 
 
-const connect = async () => {
-    try {
-        await mongoose.connect(process.env.MONGODB_URL);
-        console.log("Connected to MongoDB");
-    } catch (error) {
-        console.log(error);
-    }
-};
+mongoose.connect(process.env.MONGODB_URL)
+    .then(() => console.log('Mongodb connected'))
+    .catch(error => console.log(error));
+    app.use(cors({
+        origin: ['https://chat-bot-frontend-zeta.vercel.app','http://localhost:5173'] ,
+        credentials: true,
+    }));
+
 
 
 
