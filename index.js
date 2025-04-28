@@ -13,8 +13,11 @@ import 'dotenv/config';
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-
-
+app.use(cors({
+    origin: ['https://chat-bot-frontend-zeta.vercel.app','http://localhost:5173'],
+    credentials: true,
+}));
+app.use(express.json()); // <--- very important
 app.use(uploadRoutes);
 app.use(chatRoutes);
 app.use(userChatRoutes);
@@ -27,11 +30,7 @@ app.use('/',(req,res)=>{
 mongoose.connect(process.env.MONGODB_URL)
     .then(() => console.log('Mongodb connected'))
     .catch(error => console.log(error));
-    app.use(cors({
-        origin: ['https://chat-bot-frontend-zeta.vercel.app','http://localhost:5173'] ,
-        credentials: true,
-    }));
-
+   
 
 
 
